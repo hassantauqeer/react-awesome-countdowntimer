@@ -1,0 +1,32 @@
+{
+  "name": "react-awesome-countdowntimer",
+  "version": "0.0.3",
+  "description": "An awesome countdown timer for reactJS, easy to handle use & edit.",
+  "main": "build/index.js",
+  "peerDependencies": {
+    "react": "^15.5.4"
+  },
+  "dependencies": {
+    "moment": "^2.18.1",
+    "react": "^15.5.4",
+    "webpack": "^2.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch",
+    "build": "webpack"
+  },
+  "author": {
+    "name": "Hassan Tauqeer",
+    "email": "tauqeerhassan66@gmail.com",
+    "repository": "https://github.com/hassantauqeer/react-awesome-countdowntimer.git"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.5.1"
+  }
+}
