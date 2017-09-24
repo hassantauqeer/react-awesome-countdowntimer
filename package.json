@@ -1,6 +1,6 @@
 {
   "name": "react-awesome-countdowntimer",
-  "version": "0.0.3",
+  "version": "1.0.1",
   "description": "An awesome countdown timer for reactJS, easy to handle use & edit.",
   "main": "build/index.js",
   "peerDependencies": {
@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "moment": "^2.18.1",
+    "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "webpack": "^2.6.1"
   },
@@ -18,9 +19,10 @@
   },
   "author": {
     "name": "Hassan Tauqeer",
-    "email": "tauqeerhassan66@gmail.com",
-    "repository": "https://github.com/hassantauqeer/react-awesome-countdowntimer.git"
+    "url": "https://github.com/hassantauqeer",
+    "email": "tauqeerhassan66@gmail.com"
   },
+  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
@@ -28,5 +30,23 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.5.1"
-  }
+  },
+  "npmName": "react-awesome-countdowntimer",
+  "keywords": [
+    "react-countdown",
+    "countdown",
+    "countdown-timer",
+    "react",
+    "react-timer",
+    "slider",
+    "react-component"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hassantauqeer/react-awesome-countdowntimer"
+  },
+  "bugs": {
+    "url": "https://github.com/hassantauqeer/react-awesome-countdowntimer/issues"
+  },
+  "homepage": "https://github.com/hassantauqeer/react-awesome-countdowntimer"
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
-// import './styles.css';
 
 class CountdownTimer extends React.Component {
     constructor(props) {
@@ -102,6 +102,10 @@ class CountdownTimer extends React.Component {
             </div>
         )
     }
+}
+
+CountdownTimer.PropTypes = {
+    endDate: PropTypes.object.isRequired,
 }
 
 export default CountdownTimer;
