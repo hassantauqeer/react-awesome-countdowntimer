@@ -1,20 +1,20 @@
 {
   "name": "react-awesome-countdowntimer",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "An awesome countdown timer for reactJS, easy to handle use & edit.",
   "main": "build/index.js",
   "peerDependencies": {
     "react": "^15.5.4"
   },
   "dependencies": {
-    "moment": "^2.18.1",
+    "cross-env": "^5.0.5",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "webpack": "^2.6.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack --watch",
+    "start": "cross-env NODE_ENV=development node server",
     "build": "webpack"
   },
   "author": {

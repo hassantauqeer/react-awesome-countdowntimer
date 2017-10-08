@@ -16093,11 +16093,11 @@ var CountdownTimer = function (_React$Component) {
 
         _this.state = {
             timeRemaining: {
-                months: '00',
-                days: '00',
-                h: '00',
-                m: '00',
-                s: '00',
+                months: '',
+                days: '',
+                h: '',
+                m: '',
+                s: '',
                 interval: function interval() {}
             },
             startDate: new _moment2.default(),
@@ -16132,32 +16132,43 @@ var CountdownTimer = function (_React$Component) {
             var now = (0, _moment2.default)(); // today's date
             var end = (0, _moment2.default)(endDate); // end date
             var duration = _moment2.default.duration(end.diff(now));
-            if (Math.floor(duration.asMonths()) < 10) {
-                temp.months = '0' + Math.floor(duration.asMonths());
-            } else {
-                temp.months = Math.floor(duration.asMonths());
+            if (duration.asSeconds() >= 0) {
+                if (Math.floor(duration.asMonths()) > 0) {
+                    if (Math.floor(duration.asMonths()) < 10) {
+                        temp.months = '0' + Math.floor(duration.asMonths());
+                    } else {
+                        temp.months = Math.floor(duration.asMonths());
+                    }
+                }
+                if (Math.floor(duration.asDays()) > 0) {
+                    if (Math.floor(duration.days()) < 10) {
+                        temp.days = '0' + Math.floor(duration.days());
+                    } else {
+                        temp.days = Math.floor(duration.days());
+                    }
+                }
+                if (Math.floor(duration.asHours()) > 0) {
+                    if (Math.floor(duration.hours()) < 10) {
+                        temp.h = '0' + Math.floor(duration.hours());
+                    } else {
+                        temp.h = Math.floor(duration.hours());
+                    }
+                }
+                if (Math.floor(duration.asMinutes()) > 0) {
+                    if (Math.floor(duration.minutes()) < 10) {
+                        temp.m = '0' + Math.floor(duration.minutes());
+                    } else {
+                        temp.m = Math.floor(duration.minutes());
+                    }
+                }
+                if (Math.floor(duration.asSeconds()) > 0) {
+                    if (Math.floor(duration.seconds()) < 10) {
+                        temp.s = '0' + Math.floor(duration.seconds());
+                    } else {
+                        temp.s = Math.floor(duration.seconds());
+                    }
+                }
             }
-            if (Math.floor(duration.days()) < 10) {
-                temp.days = '0' + Math.floor(duration.days());
-            } else {
-                temp.days = Math.floor(duration.days());
-            }
-            if (Math.floor(duration.hours()) < 10) {
-                temp.h = '0' + Math.floor(duration.hours());
-            } else {
-                temp.h = Math.floor(duration.hours());
-            }
-            if (Math.floor(duration.minutes()) < 10) {
-                temp.m = '0' + Math.floor(duration.minutes());
-            } else {
-                temp.m = Math.floor(duration.minutes());
-            }
-            if (Math.floor(duration.seconds()) < 10) {
-                temp.s = '0' + Math.floor(duration.seconds());
-            } else {
-                temp.s = Math.floor(duration.seconds());
-            }
-
             this.setState({
                 timeRemaining: temp
             });
@@ -16194,7 +16205,7 @@ var CountdownTimer = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { style: timer },
-                _react2.default.createElement(
+                this.state.timeRemaining.months && _react2.default.createElement(
                     'div',
                     { style: section },
                     _react2.default.createElement(
@@ -16208,7 +16219,7 @@ var CountdownTimer = function (_React$Component) {
                         'Months'
                     )
                 ),
-                _react2.default.createElement(
+                this.state.timeRemaining.days && _react2.default.createElement(
                     'div',
                     { style: section, className: 'section' },
                     _react2.default.createElement(
@@ -16222,7 +16233,7 @@ var CountdownTimer = function (_React$Component) {
                         'Days'
                     )
                 ),
-                _react2.default.createElement(
+                this.state.timeRemaining.h && _react2.default.createElement(
                     'div',
                     { className: 'section', style: section },
                     _react2.default.createElement(
@@ -16236,7 +16247,7 @@ var CountdownTimer = function (_React$Component) {
                         'Hours'
                     )
                 ),
-                _react2.default.createElement(
+                this.state.timeRemaining.m && _react2.default.createElement(
                     'div',
                     { className: 'section', style: section },
                     _react2.default.createElement(
@@ -16250,7 +16261,7 @@ var CountdownTimer = function (_React$Component) {
                         'Minutes'
                     )
                 ),
-                _react2.default.createElement(
+                this.state.timeRemaining.s && _react2.default.createElement(
                     'div',
                     { className: 'section', style: section },
                     _react2.default.createElement(

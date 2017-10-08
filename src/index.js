@@ -7,11 +7,11 @@ class CountdownTimer extends React.Component {
         super(props);
         this.state = {
             timeRemaining: {
-                months: '00',
-                days: '00',
-                h: '00',
-                m: '00',
-                s: '00',
+                months: '',
+                days: '',
+                h: '',
+                m: '',
+                s: '',
                 interval: function () {
 
                 }
@@ -40,12 +40,13 @@ class CountdownTimer extends React.Component {
         var now = moment(); // today's date
         var end = moment(endDate); // end date
         var duration = moment.duration(end.diff(now));
-        if (Math.floor(duration.asMonths()) < 10) { temp.months = '0'+ Math.floor(duration.asMonths())} else {temp.months = Math.floor(duration.asMonths())}
-        if (Math.floor(duration.days()) < 10) { temp.days = '0'+ Math.floor(duration.days())} else {temp.days = Math.floor(duration.days())}
-        if (Math.floor(duration.hours()) < 10) { temp.h = '0'+ Math.floor(duration.hours())} else {temp.h = Math.floor(duration.hours())}
-        if (Math.floor(duration.minutes()) < 10) { temp.m = '0'+ Math.floor(duration.minutes())} else {temp.m = Math.floor(duration.minutes())}
-        if (Math.floor(duration.seconds()) < 10) { temp.s = '0'+ Math.floor(duration.seconds())} else {temp.s = Math.floor(duration.seconds())}
-
+        if (duration.asSeconds() >= 0) {
+            if (Math.floor(duration.asMonths()) > 0) { if (Math.floor(duration.asMonths()) < 10) { temp.months = '0'+ Math.floor(duration.asMonths())} else {temp.months = Math.floor(duration.asMonths())}}
+            if (Math.floor(duration.asDays()) > 0) { if (Math.floor(duration.days()) < 10) { temp.days = '0'+ Math.floor(duration.days())} else {temp.days = Math.floor(duration.days())}}
+            if (Math.floor(duration.asHours()) > 0) { if (Math.floor(duration.hours()) < 10) { temp.h = '0'+ Math.floor(duration.hours())} else {temp.h = Math.floor(duration.hours())}}
+            if (Math.floor(duration.asMinutes()) > 0) { if (Math.floor(duration.minutes()) < 10) { temp.m = '0'+ Math.floor(duration.minutes())} else {temp.m = Math.floor(duration.minutes())}}
+            if (Math.floor(duration.asSeconds()) > 0) { if (Math.floor(duration.seconds()) < 10) { temp.s = '0'+ Math.floor(duration.seconds())} else {temp.s = Math.floor(duration.seconds())}}
+        }
         this.setState({
             timeRemaining: temp
         })
@@ -79,26 +80,41 @@ class CountdownTimer extends React.Component {
     }
         return (
             <div style={timer}>
-                <div style={section}>
-                    <div className="time" style={time}>{this.state.timeRemaining.months}</div>
-                    <div className="label" style={label}>Months</div>
-                </div>
-                <div style={section} className="section">
-                    <div className="time" style={time}>{this.state.timeRemaining.days}</div>
-                    <div className="label" style={label}>Days</div>
-                </div>
-                <div className="section" style={section}>
-                    <div className="time" style={time}>{this.state.timeRemaining.h}</div>
-                    <div className="label" style={label}>Hours</div>
-                </div>
-                <div className="section" style={section}>
-                    <div className="time" style={time}>{this.state.timeRemaining.m}</div>
-                    <div className="label" style={label}>Minutes</div>
-                </div>
-                <div className="section" style={section}>
-                    <div className="time" style={time}>{this.state.timeRemaining.s}</div>
-                    <div className="label" style={label}>Seconds</div>
-                </div>
+                {
+                    this.state.timeRemaining.months &&
+                    <div style={section}>
+                        <div className="time" style={time}>{this.state.timeRemaining.months}</div>
+                        <div className="label" style={label}>Months</div>
+                    </div>
+                }
+                {
+                    this.state.timeRemaining.days &&
+                    <div style={section} className="section">
+                        <div className="time" style={time}>{this.state.timeRemaining.days}</div>
+                        <div className="label" style={label}>Days</div>
+                    </div>
+                }
+                {
+                    this.state.timeRemaining.h &&
+                    <div className="section" style={section}>
+                        <div className="time" style={time}>{this.state.timeRemaining.h}</div>
+                        <div className="label" style={label}>Hours</div>
+                    </div>
+                }
+                {
+                    this.state.timeRemaining.m &&
+                    <div className="section" style={section}>
+                        <div className="time" style={time}>{this.state.timeRemaining.m}</div>
+                        <div className="label" style={label}>Minutes</div>
+                    </div>
+                }
+                {
+                    this.state.timeRemaining.s &&
+                    <div className="section" style={section}>
+                        <div className="time" style={time}>{this.state.timeRemaining.s}</div>
+                        <div className="label" style={label}>Seconds</div>
+                    </div>
+                }
             </div>
         )
     }
