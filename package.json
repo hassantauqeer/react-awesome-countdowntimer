@@ -1,6 +1,6 @@
 {
   "name": "react-awesome-countdowntimer",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "An awesome countdown timer for reactJS, easy to handle use & edit.",
   "main": "build/index.js",
   "peerDependencies": {
