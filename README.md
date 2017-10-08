@@ -35,10 +35,13 @@ class SimpleComponent extends React.Component {
   }
 }
 
+```
+
 ### Example App
 ```bash
 cd example-app/
 ```
+
 then
 ```bash
 yarn
