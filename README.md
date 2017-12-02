@@ -30,7 +30,7 @@ import CountdownTimer from 'react-awesome-countdowntimer';
 
 class SimpleComponent extends React.Component {
     return (
-        <CountdownTimer endDate={moment('06/12/2018')}/>
+        <CountdownTimer endDate={moment('06/12/2018 12:00:00', 'DD/MM/YYYY hh:mm:ss')}/>
     );
   }
 }
