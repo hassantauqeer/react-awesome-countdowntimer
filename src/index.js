@@ -79,17 +79,17 @@ class CountdownTimer extends React.Component {
             borderRadius: '7px',
     }
         return (
-            <div style={timer}>
+            <div className="timer" style={timer}>
                 {
                     this.state.timeRemaining.months &&
-                    <div style={section}>
+                    <div className="section" style={section}>
                         <div className="time" style={time}>{this.state.timeRemaining.months}</div>
                         <div className="label" style={label}>Months</div>
                     </div>
                 }
                 {
                     this.state.timeRemaining.days &&
-                    <div style={section} className="section">
+                    <div className="section" style={section}>
                         <div className="time" style={time}>{this.state.timeRemaining.days}</div>
                         <div className="label" style={label}>Days</div>
                     </div>
