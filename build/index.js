@@ -16925,7 +16925,7 @@ var CountdownTimer = function (_React$Component) {
     return CountdownTimer;
 }(_react2.default.Component);
 
-CountdownTimer.PropTypes = {
+CountdownTimer.propTypes = {
     endDate: _propTypes2.default.object.isRequired
 };
 
