@@ -120,7 +120,7 @@ class CountdownTimer extends React.Component {
     }
 }
 
-CountdownTimer.PropTypes = {
+CountdownTimer.propTypes = {
     endDate: PropTypes.object.isRequired,
 }
 
