@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "moment": "^2.18.1",
+    "moment": "^2.29.4",
     "react": "^16.0.0",
     "react-awesome-countdowntimer": "^1.1.1",
     "react-datetime": "^2.10.3",
