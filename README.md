@@ -20,17 +20,17 @@ Live Demo: [https://codesandbox.io/p/sandbox/ypnt3l](https://codesandbox.io/p/sa
 
 **Using npm:**
 ```bash
-npm install react-awesome-countdowntimer moment
+npm install react-awesome-countdowntimer
 ```
 
 **Using pnpm:**
 ```bash
-pnpm add react-awesome-countdowntimer moment
+pnpm add react-awesome-countdowntimer
 ```
 
 **Using yarn:**
 ```bash
-yarn add react-awesome-countdowntimer moment
+yarn add react-awesome-countdowntimer
 ```
 
 ## 🚀 Quick Start
@@ -276,7 +276,6 @@ Then open [http://localhost:5173](http://localhost:5173) to see the examples.
 ## 📋 Requirements
 
 - React 16.8+ (hooks support)
-- moment.js
 
 ## 📄 License
 
