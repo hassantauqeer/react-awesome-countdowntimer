@@ -1,0 +1,170 @@
+.app {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
+}
+
+header {
+  text-align: center;
+  padding: 60px 20px 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+header h1 {
+  font-size: 3rem;
+  margin: 0 0 10px;
+  font-weight: 700;
+}
+
+header p {
+  font-size: 1.2rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.example-section {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.example-section h2 {
+  font-size: 1.8rem;
+  margin: 0 0 10px;
+  color: #1e293b;
+}
+
+.example-section p {
+  color: #64748b;
+  margin: 0 0 30px;
+  font-size: 1rem;
+}
+
+.timer-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: #64748b;
+}
+
+footer p {
+  margin: 10px 0;
+}
+
+footer a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* DateTime Picker Section */
+.datetime-picker {
+  background-color: #aaaaaa !important;
+}
+.datetime-picker-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.datetime-picker-section h2 {
+  color: white;
+}
+
+.datetime-picker-section p {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.datetime-picker-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+.react-calendar {
+  background-color: #aaaaaa !important;
+}
+
+.react-datetime-picker {
+  background: white;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.react-datetime-picker__wrapper {
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.react-datetime-picker__inputGroup {
+  font-size: 16px;
+}
+
+/* Custom CSS Classes Example */
+.custom-timer {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  padding: 35px;
+  border-radius: 18px;
+}
+
+.custom-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 14px;
+  min-width: 115px;
+  min-height: 115px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.custom-section:hover {
+  transform: translateY(-5px);
+}
+
+.custom-time {
+  color: #f5576c;
+  font-size: 58px;
+  font-weight: 800;
+}
+
+.custom-label {
+  color: #f093fb;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  
+  header p {
+    font-size: 1rem;
+  }
+  
+  .example-section {
+    padding: 25px;
+  }
+  
+  .example-section h2 {
+    font-size: 1.5rem;
+  }
+}
