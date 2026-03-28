@@ -5,6 +5,8 @@ A modern, customizable countdown timer component for React applications. Built w
 [![npm version](https://img.shields.io/npm/v/react-awesome-countdowntimer.svg)](https://www.npmjs.com/package/react-awesome-countdowntimer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
+Live Demo: [https://codesandbox.io/p/sandbox/ypnt3l](https://codesandbox.io/p/sandbox/ypnt3l)
+
 ## ✨ Features
 
 - 🎯 **Modern React** - Built with functional components and hooks
