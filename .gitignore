@@ -3,3 +3,4 @@
 /build
 pnpm-lock.yaml
 .DS_Store
+.npmrc
