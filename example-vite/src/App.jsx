@@ -154,6 +154,86 @@ function App() {
             />
           </div>
         </section>
+
+        <section className="example-section">
+          <h2>🎨 V3: Custom Renderer</h2>
+          <p>Complete control over rendering with a custom renderer function</p>
+          <div className="timer-container">
+            <CountdownTimer 
+              endDate={selectedDate}
+              renderer={({ days, hours, minutes, seconds, completed }) => {
+                if (completed) {
+                  return (
+                    <div style={{ 
+                      fontSize: '32px', 
+                      fontWeight: 'bold', 
+                      color: '#10b981',
+                      textAlign: 'center',
+                      padding: '40px'
+                    }}>
+                      🎉 Countdown Complete! 🎉
+                    </div>
+                  );
+                }
+                return (
+                  <div style={{ 
+                    display: 'flex', 
+                    gap: '10px', 
+                    fontSize: '48px',
+                    fontWeight: 'bold',
+                    color: '#6366f1',
+                    fontFamily: 'monospace'
+                  }}>
+                    {days > 0 && <span>{days}d</span>}
+                    <span>{hours}h</span>
+                    <span>:</span>
+                    <span>{minutes}m</span>
+                    <span>:</span>
+                    <span>{seconds}s</span>
+                  </div>
+                );
+              }}
+            />
+          </div>
+        </section>
+
+        <section className="example-section">
+          <h2>🔔 V3: With Callbacks</h2>
+          <p>Trigger actions on completion and every tick (check console)</p>
+          <div className="timer-container">
+            <CountdownTimer 
+              endDate={selectedDate}
+              onComplete={(timeDelta) => {
+                console.log('⏰ Countdown completed!', timeDelta);
+                alert('🎉 Time is up!');
+              }}
+              onTick={(timeDelta) => {
+                console.log('⏱️ Tick:', timeDelta.seconds, 'seconds remaining');
+              }}
+            />
+          </div>
+        </section>
+
+        <section className="example-section">
+          <h2>👶 V3: Completion Children</h2>
+          <p>Simple way to show completion state using children</p>
+          <div className="timer-container">
+            <CountdownTimer endDate={selectedDate}>
+              <div style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+                padding: '40px',
+                borderRadius: '20px',
+                fontSize: '28px',
+                fontWeight: 'bold',
+                textAlign: 'center',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
+              }}>
+                ✨ Mission Accomplished! ✨
+              </div>
+            </CountdownTimer>
+          </div>
+        </section>
       </main>
 
       <footer>

@@ -11,7 +11,10 @@ Live Demo: [https://codesandbox.io/p/sandbox/ypnt3l](https://codesandbox.io/p/sa
 
 - 🎯 **Modern React** - Built with functional components and hooks
 - 🎨 **Fully Customizable** - Style with CSS classes or inline styles
-- 📦 **Zero Dependencies** - No external dependencies required
+- 🎭 **Custom Renderer** - Complete control over rendering with render props (v3)
+- � **Lifecycle Callbacks** - onComplete, onTick callbacks for actions (v3)
+- 👶 **Completion Children** - Simple completion state with children prop (v3)
+- � **Zero Dependencies** - No external dependencies required
 - ⚡ **Lightweight** - Only ~1.5KB gzipped
 - 🚀 **Fast** - Optimized with useMemo for performance
 - 🔧 **TypeScript Ready** - Includes type definitions
@@ -49,7 +52,7 @@ function App() {
 
 ## 📖 Usage Examples
 
-### Basic Usage
+### Basic Usage (Default Styling)
 
 ```jsx
 import CountdownTimer from 'react-awesome-countdowntimer';
@@ -182,6 +185,81 @@ function App() {
 }
 ```
 
+### V3: Custom Renderer
+
+Take complete control over rendering with a custom renderer function:
+
+```jsx
+import CountdownTimer from 'react-awesome-countdowntimer';
+
+function App() {
+  const endDate = new Date('2026-12-31T23:59:59');
+  
+  return (
+    <CountdownTimer 
+      endDate={endDate}
+      renderer={({ days, hours, minutes, seconds, completed }) => {
+        if (completed) {
+          return <div>🎉 Time's up!</div>;
+        }
+        return (
+          <div>
+            {days > 0 && <span>{days}d </span>}
+            <span>{hours}:{minutes}:{seconds}</span>
+          </div>
+        );
+      }}
+    />
+  );
+}
+```
+
+### V3: With Callbacks
+
+Trigger actions when countdown completes or on every tick:
+
+```jsx
+import CountdownTimer from 'react-awesome-countdowntimer';
+import 'react-awesome-countdowntimer/dist/index.css';
+
+function App() {
+  const endDate = new Date('2026-12-31T23:59:59');
+  
+  return (
+    <CountdownTimer 
+      endDate={endDate}
+      onComplete={(timeDelta) => {
+        console.log('Countdown finished!', timeDelta);
+        // Play sound, show notification, etc.
+      }}
+      onTick={(timeDelta) => {
+        console.log('Tick:', timeDelta.seconds);
+        // Update progress bar, etc.
+      }}
+    />
+  );
+}
+```
+
+### V3: Completion Children
+
+Simple way to show content when countdown completes:
+
+```jsx
+import CountdownTimer from 'react-awesome-countdowntimer';
+import 'react-awesome-countdowntimer/dist/index.css';
+
+function App() {
+  const endDate = new Date('2026-12-31T23:59:59');
+  
+  return (
+    <CountdownTimer endDate={endDate}>
+      <div>✨ Countdown Complete! ✨</div>
+    </CountdownTimer>
+  );
+}
+```
+
 ### Creating Dates
 
 Since the component uses native JavaScript Date objects, you can create dates in multiple ways:
@@ -207,6 +285,10 @@ const endDate3 = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days from 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
 | `endDate` | `Date` | ✅ Yes | - | The target date/time for the countdown |
+| `renderer` | `function` | ❌ No | `undefined` | **V3** Custom render function for complete control over output |
+| `children` | `ReactNode` | ❌ No | `undefined` | **V3** Content to show when countdown completes |
+| `onComplete` | `function` | ❌ No | `undefined` | **V3** Callback when countdown finishes |
+| `onTick` | `function` | ❌ No | `undefined` | **V3** Callback on every second (tick) |
 | `timerClassName` | `string` | ❌ No | `''` | Custom CSS class for the timer container |
 | `sectionClassName` | `string` | ❌ No | `''` | Custom CSS class for each time unit section |
 | `timeClassName` | `string` | ❌ No | `''` | Custom CSS class for the time numbers |
@@ -215,6 +297,35 @@ const endDate3 = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days from 
 | `sectionStyle` | `object` | ❌ No | `undefined` | Inline styles for each time unit section |
 | `timeStyle` | `object` | ❌ No | `undefined` | Inline styles for the time numbers |
 | `labelStyle` | `object` | ❌ No | `undefined` | Inline styles for the labels |
+
+### V3 Render Props (for custom renderer)
+
+When using the `renderer` prop, your function receives an object with:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `total` | `number` | Total milliseconds remaining |
+| `days` | `number` | Days remaining (as number) |
+| `hours` | `number` | Hours remaining (as number) |
+| `minutes` | `number` | Minutes remaining (as number) |
+| `seconds` | `number` | Seconds remaining (as number) |
+| `completed` | `boolean` | Whether countdown has finished |
+| `formatted` | `object` | Zero-padded string values (`{ days, hours, minutes, seconds }`) |
+
+### V3 Callback Parameters
+
+Both `onComplete` and `onTick` receive a `timeDelta` object:
+
+```typescript
+{
+  total: number;      // Total milliseconds remaining
+  days: number;       // Days remaining
+  hours: number;      // Hours remaining
+  minutes: number;    // Minutes remaining
+  seconds: number;    // Seconds remaining
+  completed: boolean; // Whether countdown is complete
+}
+```
 
 ### Default CSS Classes
 

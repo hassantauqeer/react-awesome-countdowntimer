@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import './CountdownTimer.css';
 
 const CountdownTimer = ({
@@ -11,6 +11,10 @@ const CountdownTimer = ({
   sectionStyle,
   timeStyle,
   labelStyle,
+  renderer,
+  children,
+  onComplete,
+  onTick,
 }) => {
   const [timeRemaining, setTimeRemaining] = useState({
     months: '',
@@ -19,6 +23,8 @@ const CountdownTimer = ({
     minutes: '',
     seconds: '',
   });
+  const [completed, setCompleted] = useState(false);
+  const completedRef = useRef(false);
 
   useEffect(() => {
     const calculateTimeRemaining = () => {
@@ -31,6 +37,7 @@ const CountdownTimer = ({
       const timeDiff = endDate.getTime() - now.getTime();
 
       if (timeDiff < 0) {
+        const wasCompleted = completedRef.current;
         setTimeRemaining({
           months: '',
           days: '',
@@ -38,6 +45,20 @@ const CountdownTimer = ({
           minutes: '',
           seconds: '',
         });
+        setCompleted(true);
+        completedRef.current = true;
+        
+        // Trigger onComplete callback only once
+        if (!wasCompleted && onComplete) {
+          onComplete({
+            total: 0,
+            days: 0,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+            completed: true,
+          });
+        }
         return;
       }
 
@@ -63,13 +84,26 @@ const CountdownTimer = ({
         minutes: totalMinutes > 0 ? formatNumber(minutes) : '',
         seconds: totalSeconds > 0 ? formatNumber(seconds) : '',
       });
+      setCompleted(false);
+      
+      // Trigger onTick callback
+      if (onTick) {
+        onTick({
+          total: timeDiff,
+          days: totalDays,
+          hours: totalHours,
+          minutes: totalMinutes,
+          seconds: totalSeconds,
+          completed: false,
+        });
+      }
     };
 
     calculateTimeRemaining();
     const interval = setInterval(calculateTimeRemaining, 1000);
 
     return () => clearInterval(interval);
-  }, [endDate]);
+  }, [endDate, onComplete, onTick]);
 
   const timerClasses = useMemo(() => {
     return `react-countdown-timer ${timerClassName}`.trim();
@@ -102,6 +136,37 @@ const CountdownTimer = ({
     );
   };
 
+  // Prepare render props for custom renderer
+  const renderProps = useMemo(() => {
+    const parseFormattedValue = (val) => (val ? parseInt(val, 10) : 0);
+    
+    return {
+      total: completed ? 0 : Math.max(0, endDate?.getTime() - new Date().getTime()),
+      days: parseFormattedValue(timeRemaining.days),
+      hours: parseFormattedValue(timeRemaining.hours),
+      minutes: parseFormattedValue(timeRemaining.minutes),
+      seconds: parseFormattedValue(timeRemaining.seconds),
+      completed,
+      formatted: {
+        days: timeRemaining.days,
+        hours: timeRemaining.hours,
+        minutes: timeRemaining.minutes,
+        seconds: timeRemaining.seconds,
+      },
+    };
+  }, [timeRemaining, completed, endDate]);
+
+  // If completed and children provided, show children
+  if (completed && children) {
+    return children;
+  }
+
+  // If custom renderer provided, use it
+  if (renderer) {
+    return renderer(renderProps);
+  }
+
+  // Default rendering
   return (
     <div className={timerClasses} style={timerStyle}>
       {renderTimeUnit(timeRemaining.months, 'Months', 'months')}
