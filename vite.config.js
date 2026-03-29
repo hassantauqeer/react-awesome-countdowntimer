@@ -12,7 +12,7 @@ export default defineConfig({
       fileName: 'index'
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime', 'moment', 'prop-types']
+      external: ['react', 'react-dom', 'react/jsx-runtime']
     },
     outDir: 'dist',
     emptyOutDir: true

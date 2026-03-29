@@ -1,6 +1,4 @@
 import { useState, useEffect, useMemo } from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
 import './CountdownTimer.css';
 
 const CountdownTimer = ({
@@ -24,13 +22,15 @@ const CountdownTimer = ({
 
   useEffect(() => {
     const calculateTimeRemaining = () => {
-      if (!(endDate instanceof Date)) return;
+      if (!(endDate instanceof Date) || isNaN(endDate.getTime())) {
+        console.warn('CountdownTimer: endDate must be a valid Date object');
+        return;
+      }
 
-      const now = moment();
-      const end = moment(endDate);
-      const duration = moment.duration(end.diff(now));
+      const now = new Date();
+      const timeDiff = endDate.getTime() - now.getTime();
 
-      if (duration.asSeconds() < 0) {
+      if (timeDiff < 0) {
         setTimeRemaining({
           months: '',
           days: '',
@@ -41,14 +41,27 @@ const CountdownTimer = ({
         return;
       }
 
+      // Calculate time units
+      const totalSeconds = Math.floor(timeDiff / 1000);
+      const totalMinutes = Math.floor(totalSeconds / 60);
+      const totalHours = Math.floor(totalMinutes / 60);
+      const totalDays = Math.floor(totalHours / 24);
+      const totalMonths = Math.floor(totalDays / 30); // Approximate
+
+      const months = totalMonths;
+      const days = totalDays % 30;
+      const hours = totalHours % 24;
+      const minutes = totalMinutes % 60;
+      const seconds = totalSeconds % 60;
+
       const formatNumber = (num) => (num < 10 ? `0${num}` : `${num}`);
 
       setTimeRemaining({
-        months: Math.floor(duration.asMonths()) > 0 ? formatNumber(Math.floor(duration.asMonths())) : '',
-        days: Math.floor(duration.asDays()) > 0 ? formatNumber(Math.floor(duration.days())) : '',
-        hours: Math.floor(duration.asHours()) > 0 ? formatNumber(Math.floor(duration.hours())) : '',
-        minutes: Math.floor(duration.asMinutes()) > 0 ? formatNumber(Math.floor(duration.minutes())) : '',
-        seconds: Math.floor(duration.asSeconds()) > 0 ? formatNumber(Math.floor(duration.seconds())) : '',
+        months: months > 0 ? formatNumber(months) : '',
+        days: totalDays > 0 ? formatNumber(days) : '',
+        hours: totalHours > 0 ? formatNumber(hours) : '',
+        minutes: totalMinutes > 0 ? formatNumber(minutes) : '',
+        seconds: totalSeconds > 0 ? formatNumber(seconds) : '',
       });
     };
 
@@ -100,16 +113,9 @@ const CountdownTimer = ({
   );
 };
 
-CountdownTimer.propTypes = {
-  endDate: PropTypes.instanceOf(Date).isRequired,
-  timerClassName: PropTypes.string,
-  sectionClassName: PropTypes.string,
-  timeClassName: PropTypes.string,
-  labelClassName: PropTypes.string,
-  timerStyle: PropTypes.object,
-  sectionStyle: PropTypes.object,
-  timeStyle: PropTypes.object,
-  labelStyle: PropTypes.object,
-};
+// Prop validation in development
+if (process.env.NODE_ENV !== 'production') {
+  CountdownTimer.displayName = 'CountdownTimer';
+}
 
 export default CountdownTimer;

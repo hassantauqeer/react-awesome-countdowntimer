@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import moment from 'moment'
 import DateTimePicker from 'react-datetime-picker'
 import CountdownTimer from 'react-awesome-countdowntimer'
 import 'react-awesome-countdowntimer/dist/index.css'
@@ -9,7 +8,14 @@ import 'react-clock/dist/Clock.css'
 import './App.css'
 
 function App() {
-  const [selectedDate, setSelectedDate] = useState(moment().add(7, 'days').toDate())
+  // Set default date to 7 days from now using native Date
+  const getDefaultDate = () => {
+    const date = new Date();
+    date.setDate(date.getDate() + 7);
+    return date;
+  };
+  
+  const [selectedDate, setSelectedDate] = useState(getDefaultDate())
 
   return (
     <div className="app">
@@ -112,11 +118,39 @@ function App() {
                 textShadow: '2px 2px 4px rgba(0,0,0,0.2)'
               }}
               labelStyle={{
-                color: '#e2e2e2',
+                color: '#764ba2',
                 fontSize: '14px',
                 fontWeight: '500',
                 letterSpacing: '1px'
               }}
+            />
+          </div>
+        </section>
+
+        <section className="example-section">
+          <h2>Responsive Layout</h2>
+          <p>Layout adapts to screen size (font sizes stay the same)</p>
+          <div className="timer-container">
+            <CountdownTimer 
+              endDate={selectedDate}
+              timerClassName="responsive-timer"
+              sectionClassName="responsive-section"
+              timeClassName="responsive-time"
+              labelClassName="responsive-label"
+            />
+          </div>
+        </section>
+
+        <section className="example-section">
+          <h2>Fully Responsive (Layout + Font Sizes)</h2>
+          <p>Both layout AND font sizes scale down on smaller screens - try resizing!</p>
+          <div className="timer-container">
+            <CountdownTimer 
+              endDate={selectedDate}
+              timerClassName="fully-responsive-timer"
+              sectionClassName="fully-responsive-section"
+              timeClassName="fully-responsive-time"
+              labelClassName="fully-responsive-label"
             />
           </div>
         </section>

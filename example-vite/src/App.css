@@ -151,6 +151,66 @@ footer a:hover {
   letter-spacing: 1.5px;
 }
 
+/* Responsive Timer Example */
+.responsive-timer {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  padding: 30px;
+  border-radius: 16px;
+  gap: 15px;
+}
+
+.responsive-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  min-width: 100px;
+  min-height: 100px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.responsive-section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.responsive-time {
+  color: #11998e;
+  font-size: 64px;
+  font-weight: 700;
+}
+
+.responsive-label {
+  color: #38ef7d;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Tablet responsiveness */
+@media (max-width: 1024px) {
+  .responsive-timer {
+    padding: 25px;
+    gap: 12px;
+  }
+  
+  .responsive-section {
+    min-width: 90px;
+    min-height: 90px;
+    padding: 12px;
+  }
+  
+  .responsive-time {
+    font-size: 52px;
+  }
+  
+  .responsive-label {
+    font-size: 14px;
+  }
+}
+
+/* Mobile responsiveness */
 @media (max-width: 768px) {
   header h1 {
     font-size: 2rem;
@@ -166,5 +226,179 @@ footer a:hover {
   
   .example-section h2 {
     font-size: 1.5rem;
+  }
+  
+  .responsive-timer {
+    padding: 20px;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .responsive-section {
+    min-width: 80px;
+    min-height: 80px;
+    padding: 10px;
+  }
+  
+  .responsive-time {
+    font-size: 42px;
+  }
+  
+  .responsive-label {
+    font-size: 12px;
+  }
+}
+
+/* Small mobile responsiveness */
+@media (max-width: 480px) {
+  .responsive-timer {
+    padding: 15px;
+    gap: 8px;
+  }
+  
+  .responsive-section {
+    min-width: 70px;
+    min-height: 70px;
+    padding: 8px;
+  }
+  
+  .responsive-time {
+    font-size: 32px;
+  }
+  
+  .responsive-label {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+}
+
+/* Fully Responsive Timer Example (Layout + Font Sizes) */
+.fully-responsive-timer {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  padding: 35px;
+  border-radius: 18px;
+  gap: 20px;
+}
+
+.fully-responsive-section {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 14px;
+  min-width: 110px;
+  min-height: 110px;
+  padding: 18px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+}
+
+.fully-responsive-section:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.fully-responsive-time {
+  color: #fa709a;
+  font-size: 68px;
+  font-weight: 800;
+}
+
+.fully-responsive-label {
+  color: #d63384;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+/* Tablet - scale down both layout and fonts */
+@media (max-width: 1024px) {
+  .fully-responsive-timer {
+    padding: 28px;
+    gap: 16px;
+  }
+  
+  .fully-responsive-section {
+    min-width: 95px;
+    min-height: 95px;
+    padding: 15px;
+  }
+  
+  .fully-responsive-time {
+    font-size: 56px;
+  }
+  
+  .fully-responsive-label {
+    font-size: 15px;
+  }
+}
+
+/* Mobile - significantly scale down */
+@media (max-width: 768px) {
+  .fully-responsive-timer {
+    padding: 22px;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .fully-responsive-section {
+    min-width: 75px;
+    min-height: 75px;
+    padding: 12px;
+  }
+  
+  .fully-responsive-time {
+    font-size: 40px;
+  }
+  
+  .fully-responsive-label {
+    font-size: 12px;
+    letter-spacing: 0.8px;
+  }
+}
+
+/* Small mobile - very compact */
+@media (max-width: 480px) {
+  .fully-responsive-timer {
+    padding: 16px;
+    gap: 8px;
+  }
+  
+  .fully-responsive-section {
+    min-width: 65px;
+    min-height: 65px;
+    padding: 8px;
+  }
+  
+  .fully-responsive-time {
+    font-size: 28px;
+  }
+  
+  .fully-responsive-label {
+    font-size: 9px;
+    letter-spacing: 0.5px;
+  }
+}
+
+/* Extra small mobile - ultra compact */
+@media (max-width: 360px) {
+  .fully-responsive-timer {
+    padding: 12px;
+    gap: 6px;
+  }
+  
+  .fully-responsive-section {
+    min-width: 55px;
+    min-height: 55px;
+    padding: 6px;
+  }
+  
+  .fully-responsive-time {
+    font-size: 22px;
+  }
+  
+  .fully-responsive-label {
+    font-size: 8px;
+    letter-spacing: 0.3px;
   }
 }

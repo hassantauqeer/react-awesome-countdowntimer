@@ -11,8 +11,9 @@ Live Demo: [https://codesandbox.io/p/sandbox/ypnt3l](https://codesandbox.io/p/sa
 
 - 🎯 **Modern React** - Built with functional components and hooks
 - 🎨 **Fully Customizable** - Style with CSS classes or inline styles
-- 📦 **Lightweight** - Only 2.7KB gzipped
-- ⚡ **Fast** - Optimized with useMemo for performance
+- 📦 **Zero Dependencies** - No external dependencies required
+- ⚡ **Lightweight** - Only ~1.5KB gzipped
+- 🚀 **Fast** - Optimized with useMemo for performance
 - 🔧 **TypeScript Ready** - Includes type definitions
 - 🌐 **ESM Support** - Modern module format
 
@@ -181,6 +182,24 @@ function App() {
 }
 ```
 
+### Creating Dates
+
+Since the component uses native JavaScript Date objects, you can create dates in multiple ways:
+
+```jsx
+// Using Date constructor with string
+const endDate1 = new Date('2026-12-31T23:59:59');
+
+// Using Date constructor with parameters (year, month, day, hour, minute, second)
+const endDate2 = new Date(2026, 11, 31, 23, 59, 59); // Note: month is 0-indexed
+
+// Adding time to current date
+const endDate3 = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days from now
+
+// Using any of these
+<CountdownTimer endDate={endDate1} />
+```
+
 ## 🎛️ API Reference
 
 ### Props
@@ -276,6 +295,7 @@ Then open [http://localhost:5173](http://localhost:5173) to see the examples.
 ## 📋 Requirements
 
 - React 16.8+ (hooks support)
+- No other dependencies required!
 
 ## 📄 License
 
