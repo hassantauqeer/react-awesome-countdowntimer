@@ -1,7 +1,7 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, forwardRef, useImperativeHandle } from 'react';
 import './CountdownTimer.css';
 
-const CountdownTimer = ({
+const CountdownTimer = forwardRef(({
   endDate,
   timerClassName = '',
   sectionClassName = '',
@@ -15,7 +15,13 @@ const CountdownTimer = ({
   children,
   onComplete,
   onTick,
-}) => {
+  onStart,
+  onPause,
+  onStop,
+  autoStart = true,
+  zeroPadTime = 2,
+  overtime = false,
+}, ref) => {
   const [timeRemaining, setTimeRemaining] = useState({
     months: '',
     days: '',
@@ -24,7 +30,13 @@ const CountdownTimer = ({
     seconds: '',
   });
   const [completed, setCompleted] = useState(false);
+  const [isRunning, setIsRunning] = useState(autoStart);
+  const [isPausedState, setIsPausedState] = useState(false);
+  const [isStoppedState, setIsStoppedState] = useState(!autoStart);
   const completedRef = useRef(false);
+  const intervalRef = useRef(null);
+  const offsetTimeRef = useRef(0);
+  const pauseTimeRef = useRef(null);
 
   useEffect(() => {
     const calculateTimeRemaining = () => {
@@ -36,7 +48,7 @@ const CountdownTimer = ({
       const now = new Date();
       const timeDiff = endDate.getTime() - now.getTime();
 
-      if (timeDiff < 0) {
+      if (timeDiff < 0 && !overtime) {
         const wasCompleted = completedRef.current;
         setTimeRemaining({
           months: '',
@@ -47,6 +59,7 @@ const CountdownTimer = ({
         });
         setCompleted(true);
         completedRef.current = true;
+        setIsRunning(false);
         
         // Trigger onComplete callback only once
         if (!wasCompleted && onComplete) {
@@ -62,8 +75,9 @@ const CountdownTimer = ({
         return;
       }
 
-      // Calculate time units
-      const totalSeconds = Math.floor(timeDiff / 1000);
+      // Calculate time units (support negative for overtime)
+      const absTimeDiff = Math.abs(timeDiff);
+      const totalSeconds = Math.floor(absTimeDiff / 1000);
       const totalMinutes = Math.floor(totalSeconds / 60);
       const totalHours = Math.floor(totalMinutes / 60);
       const totalDays = Math.floor(totalHours / 24);
@@ -75,16 +89,21 @@ const CountdownTimer = ({
       const minutes = totalMinutes % 60;
       const seconds = totalSeconds % 60;
 
-      const formatNumber = (num) => (num < 10 ? `0${num}` : `${num}`);
+      const formatNumber = (num) => {
+        const str = String(num);
+        return str.padStart(zeroPadTime, '0');
+      };
+      
+      const prefix = overtime && timeDiff < 0 ? '-' : '';
 
       setTimeRemaining({
-        months: months > 0 ? formatNumber(months) : '',
-        days: totalDays > 0 ? formatNumber(days) : '',
-        hours: totalHours > 0 ? formatNumber(hours) : '',
-        minutes: totalMinutes > 0 ? formatNumber(minutes) : '',
-        seconds: totalSeconds > 0 ? formatNumber(seconds) : '',
+        months: months > 0 ? prefix + formatNumber(months) : '',
+        days: totalDays > 0 ? prefix + formatNumber(days) : '',
+        hours: totalHours > 0 ? prefix + formatNumber(hours) : '',
+        minutes: totalMinutes > 0 ? prefix + formatNumber(minutes) : '',
+        seconds: totalSeconds > 0 ? prefix + formatNumber(seconds) : '',
       });
-      setCompleted(false);
+      setCompleted(timeDiff < 0 && !overtime);
       
       // Trigger onTick callback
       if (onTick) {
@@ -99,11 +118,77 @@ const CountdownTimer = ({
       }
     };
 
-    calculateTimeRemaining();
-    const interval = setInterval(calculateTimeRemaining, 1000);
+    if (!isRunning) return;
 
-    return () => clearInterval(interval);
-  }, [endDate, onComplete, onTick]);
+    calculateTimeRemaining();
+    intervalRef.current = setInterval(calculateTimeRemaining, 1000);
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [endDate, onComplete, onTick, isRunning, zeroPadTime, overtime]);
+
+  // Imperative API
+  useImperativeHandle(ref, () => ({
+    start: () => {
+      if (isRunning) return;
+      
+      setIsRunning(true);
+      setIsPausedState(false);
+      setIsStoppedState(false);
+      
+      if (pauseTimeRef.current) {
+        offsetTimeRef.current += Date.now() - pauseTimeRef.current;
+        pauseTimeRef.current = null;
+      }
+      
+      if (onStart) {
+        onStart({
+          total: Math.max(0, endDate?.getTime() - new Date().getTime()),
+          completed: completed,
+        });
+      }
+    },
+    
+    pause: () => {
+      if (!isRunning || isPausedState) return;
+      
+      setIsRunning(false);
+      setIsPausedState(true);
+      pauseTimeRef.current = Date.now();
+      
+      if (onPause) {
+        onPause({
+          total: Math.max(0, endDate?.getTime() - new Date().getTime()),
+          completed: completed,
+        });
+      }
+    },
+    
+    stop: () => {
+      if (isStoppedState) return;
+      
+      setIsRunning(false);
+      setIsPausedState(false);
+      setIsStoppedState(true);
+      offsetTimeRef.current = 0;
+      pauseTimeRef.current = null;
+      
+      if (onStop) {
+        onStop({
+          total: Math.max(0, endDate?.getTime() - new Date().getTime()),
+          completed: completed,
+        });
+      }
+    },
+    
+    isPaused: () => isPausedState,
+    isStopped: () => isStoppedState,
+    isCompleted: () => completed,
+  }), [isRunning, isPausedState, isStoppedState, completed, endDate, onStart, onPause, onStop]);
 
   const timerClasses = useMemo(() => {
     return `react-countdown-timer ${timerClassName}`.trim();
@@ -176,7 +261,7 @@ const CountdownTimer = ({
       {renderTimeUnit(timeRemaining.seconds, 'Seconds', 'seconds')}
     </div>
   );
-};
+});
 
 // Prop validation in development
 if (process.env.NODE_ENV !== 'production') {

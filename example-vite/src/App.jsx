@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import DateTimePicker from 'react-datetime-picker'
 import CountdownTimer from 'react-awesome-countdowntimer'
 import 'react-awesome-countdowntimer/dist/index.css'
@@ -16,6 +16,9 @@ function App() {
   };
   
   const [selectedDate, setSelectedDate] = useState(getDefaultDate())
+  const [overtimeDate] = useState(() => new Date(Date.now() + 10000))
+  const controlledTimerRef = useRef()
+  const overtimeTimerRef = useRef()
 
   return (
     <div className="app">
@@ -232,6 +235,85 @@ function App() {
                 ✨ Mission Accomplished! ✨
               </div>
             </CountdownTimer>
+          </div>
+        </section>
+
+        <section className="example-section">
+          <h2>🎮 Phase 2: Imperative Controls</h2>
+          <p>Start, pause, and stop the countdown programmatically</p>
+          <div className="timer-container">
+            <CountdownTimer 
+              ref={controlledTimerRef}
+              endDate={selectedDate}
+              autoStart={false}
+              onStart={() => console.log('▶️ Started')}
+              onPause={() => console.log('⏸️ Paused')}
+              onStop={() => console.log('⏹️ Stopped')}
+            />
+            <div style={{ marginTop: '20px', display: 'flex', gap: '10px', justifyContent: 'center' }}>
+              <button 
+                onClick={() => controlledTimerRef.current?.start()}
+                style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}
+              >
+                ▶️ Start
+              </button>
+              <button 
+                onClick={() => controlledTimerRef.current?.pause()}
+                style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}
+              >
+                ⏸️ Pause
+              </button>
+              <button 
+                onClick={() => controlledTimerRef.current?.stop()}
+                style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}
+              >
+                ⏹️ Stop
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="example-section">
+          <h2>🔢 Phase 2: Zero Padding Control</h2>
+          <p>Control number formatting with zeroPadTime prop</p>
+          <div className="timer-container">
+            <div style={{ marginBottom: '20px' }}>
+              <strong>zeroPadTime=1 (no padding):</strong>
+              <CountdownTimer 
+                endDate={selectedDate}
+                zeroPadTime={1}
+              />
+            </div>
+            <div style={{ marginBottom: '20px' }}>
+              <strong>zeroPadTime=3 (3 digits):</strong>
+              <CountdownTimer 
+                endDate={selectedDate}
+                zeroPadTime={3}
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="example-section">
+          <h2>⏱️ Phase 2: Overtime Mode</h2>
+          <p>Countdown continues into negative after reaching zero</p>
+          <div className="timer-container">
+            <CountdownTimer 
+              ref={overtimeTimerRef}
+              endDate={overtimeDate}
+              overtime={true}
+              renderer={({ hours, minutes, seconds, completed }) => (
+                <div style={{ 
+                  fontSize: '42px', 
+                  fontWeight: 'bold',
+                  color: completed ? '#ef4444' : '#10b981',
+                  fontFamily: 'monospace'
+                }}>
+                  {completed && <span style={{ marginRight: '10px' }}>⚠️ OVERTIME</span>}
+                  {hours}:{minutes}:{seconds}
+                </div>
+              )}
+            />
           </div>
         </section>
       </main>

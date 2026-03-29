@@ -260,6 +260,70 @@ function App() {
 }
 ```
 
+### Phase 2: Imperative API
+
+Control the countdown programmatically with start, pause, and stop methods:
+
+```jsx
+import { useRef } from 'react';
+import CountdownTimer from 'react-awesome-countdowntimer';
+import 'react-awesome-countdowntimer/dist/index.css';
+
+function App() {
+  const timerRef = useRef();
+  const endDate = new Date('2026-12-31T23:59:59');
+  
+  return (
+    <>
+      <CountdownTimer 
+        ref={timerRef}
+        endDate={endDate}
+        autoStart={false}
+        onStart={() => console.log('Started!')}
+        onPause={() => console.log('Paused!')}
+        onStop={() => console.log('Stopped!')}
+      />
+      
+      <button onClick={() => timerRef.current.start()}>Start</button>
+      <button onClick={() => timerRef.current.pause()}>Pause</button>
+      <button onClick={() => timerRef.current.stop()}>Stop</button>
+    </>
+  );
+}
+```
+
+### Phase 2: Zero Padding Control
+
+Control how numbers are formatted:
+
+```jsx
+// No padding: 1:2:3
+<CountdownTimer endDate={endDate} zeroPadTime={1} />
+
+// Default padding: 01:02:03
+<CountdownTimer endDate={endDate} zeroPadTime={2} />
+
+// Extra padding: 001:002:003
+<CountdownTimer endDate={endDate} zeroPadTime={3} />
+```
+
+### Phase 2: Overtime Mode
+
+Continue counting into negative after reaching zero:
+
+```jsx
+<CountdownTimer 
+  endDate={endDate}
+  overtime={true}
+  renderer={({ hours, minutes, seconds, completed }) => (
+    <div>
+      {completed && <span>OVERTIME: </span>}
+      {hours}:{minutes}:{seconds}
+    </div>
+  )}
+/>
+```
+
 ### Creating Dates
 
 Since the component uses native JavaScript Date objects, you can create dates in multiple ways:
@@ -289,6 +353,12 @@ const endDate3 = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days from 
 | `children` | `ReactNode` | ❌ No | `undefined` | **V3** Content to show when countdown completes |
 | `onComplete` | `function` | ❌ No | `undefined` | **V3** Callback when countdown finishes |
 | `onTick` | `function` | ❌ No | `undefined` | **V3** Callback on every second (tick) |
+| `onStart` | `function` | ❌ No | `undefined` | **Phase 2** Callback when countdown starts |
+| `onPause` | `function` | ❌ No | `undefined` | **Phase 2** Callback when countdown pauses |
+| `onStop` | `function` | ❌ No | `undefined` | **Phase 2** Callback when countdown stops |
+| `autoStart` | `boolean` | ❌ No | `true` | **Phase 2** Whether countdown starts automatically |
+| `zeroPadTime` | `number` | ❌ No | `2` | **Phase 2** Number of digits for zero-padding (1-3) |
+| `overtime` | `boolean` | ❌ No | `false` | **Phase 2** Continue into negative after reaching zero |
 | `timerClassName` | `string` | ❌ No | `''` | Custom CSS class for the timer container |
 | `sectionClassName` | `string` | ❌ No | `''` | Custom CSS class for each time unit section |
 | `timeClassName` | `string` | ❌ No | `''` | Custom CSS class for the time numbers |
@@ -325,6 +395,29 @@ Both `onComplete` and `onTick` receive a `timeDelta` object:
   seconds: number;    // Seconds remaining
   completed: boolean; // Whether countdown is complete
 }
+```
+
+### Phase 2 Imperative API Methods
+
+When using a ref, you can access these methods:
+
+| Method | Returns | Description |
+|--------|---------|-------------|
+| `start()` | `void` | Starts the countdown |
+| `pause()` | `void` | Pauses the countdown |
+| `stop()` | `void` | Stops and resets the countdown |
+| `isPaused()` | `boolean` | Returns true if countdown is paused |
+| `isStopped()` | `boolean` | Returns true if countdown is stopped |
+| `isCompleted()` | `boolean` | Returns true if countdown has finished |
+
+**Example:**
+```jsx
+const timerRef = useRef();
+
+// Later in your code:
+timerRef.current.start();
+timerRef.current.pause();
+const paused = timerRef.current.isPaused();
 ```
 
 ### Default CSS Classes
