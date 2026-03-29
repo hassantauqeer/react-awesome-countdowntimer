@@ -148,6 +148,7 @@ footer a:hover {
   font-size: 15px;
   font-weight: 600;
   text-transform: uppercase;
+  background: transparent;
   letter-spacing: 1.5px;
 }
 
@@ -184,6 +185,7 @@ footer a:hover {
   color: #38ef7d;
   font-size: 16px;
   font-weight: 600;
+  background: transparent;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -306,6 +308,7 @@ footer a:hover {
   color: #d63384;
   font-size: 18px;
   font-weight: 600;
+  background: transparent;
   text-transform: uppercase;
   letter-spacing: 1.2px;
 }
