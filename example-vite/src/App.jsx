@@ -316,6 +316,34 @@ function App() {
             />
           </div>
         </section>
+
+        <section className="example-section">
+          <h2>🕐 Additional: Days in Hours</h2>
+          <p>Show all time in hours instead of separating days</p>
+          <div className="timer-container">
+            <div style={{ marginBottom: '20px' }}>
+              <strong>Normal (with days):</strong>
+              <CountdownTimer endDate={selectedDate} />
+            </div>
+            <div>
+              <strong>daysInHours=true (48h instead of 2d):</strong>
+              <CountdownTimer endDate={selectedDate} daysInHours={true} />
+            </div>
+          </div>
+        </section>
+
+        <section className="example-section">
+          <h2>📍 Additional: onMount Callback</h2>
+          <p>Triggered once when component mounts (check console)</p>
+          <div className="timer-container">
+            <CountdownTimer 
+              endDate={selectedDate}
+              onMount={(timeDelta) => {
+                console.log('🎬 Timer mounted with:', timeDelta);
+              }}
+            />
+          </div>
+        </section>
       </main>
 
       <footer>

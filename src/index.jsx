@@ -18,9 +18,11 @@ const CountdownTimer = forwardRef(({
   onStart,
   onPause,
   onStop,
+  onMount,
   autoStart = true,
   zeroPadTime = 2,
   overtime = false,
+  daysInHours = false,
 }, ref) => {
   const [timeRemaining, setTimeRemaining] = useState({
     months: '',
@@ -37,6 +39,20 @@ const CountdownTimer = forwardRef(({
   const intervalRef = useRef(null);
   const offsetTimeRef = useRef(0);
   const pauseTimeRef = useRef(null);
+  const mountedRef = useRef(false);
+
+  // onMount callback
+  useEffect(() => {
+    if (!mountedRef.current && onMount) {
+      mountedRef.current = true;
+      const now = new Date();
+      const timeDiff = endDate instanceof Date ? endDate.getTime() - now.getTime() : 0;
+      onMount({
+        total: Math.max(0, timeDiff),
+        completed: timeDiff <= 0,
+      });
+    }
+  }, [onMount, endDate]);
 
   useEffect(() => {
     const calculateTimeRemaining = () => {
@@ -84,8 +100,17 @@ const CountdownTimer = forwardRef(({
       const totalMonths = Math.floor(totalDays / 30); // Approximate
 
       const months = totalMonths;
-      const days = totalDays % 30;
-      const hours = totalHours % 24;
+      let days, hours;
+      
+      if (daysInHours) {
+        // Show all time in hours instead of days
+        days = 0;
+        hours = totalHours;
+      } else {
+        days = totalDays % 30;
+        hours = totalHours % 24;
+      }
+      
       const minutes = totalMinutes % 60;
       const seconds = totalSeconds % 60;
 
@@ -98,8 +123,8 @@ const CountdownTimer = forwardRef(({
 
       setTimeRemaining({
         months: months > 0 ? prefix + formatNumber(months) : '',
-        days: totalDays > 0 ? prefix + formatNumber(days) : '',
-        hours: totalHours > 0 ? prefix + formatNumber(hours) : '',
+        days: !daysInHours && totalDays > 0 ? prefix + formatNumber(days) : '',
+        hours: (daysInHours ? totalHours : totalHours % 24) > 0 ? prefix + formatNumber(hours) : '',
         minutes: totalMinutes > 0 ? prefix + formatNumber(minutes) : '',
         seconds: totalSeconds > 0 ? prefix + formatNumber(seconds) : '',
       });
@@ -129,7 +154,7 @@ const CountdownTimer = forwardRef(({
         intervalRef.current = null;
       }
     };
-  }, [endDate, onComplete, onTick, isRunning, zeroPadTime, overtime]);
+  }, [endDate, onComplete, onTick, isRunning, zeroPadTime, overtime, daysInHours]);
 
   // Imperative API
   useImperativeHandle(ref, () => ({

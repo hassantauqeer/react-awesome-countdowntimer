@@ -324,6 +324,32 @@ Continue counting into negative after reaching zero:
 />
 ```
 
+### Additional: Days in Hours
+
+Show time in hours instead of separating into days:
+
+```jsx
+// Normal: 2 days, 5 hours
+<CountdownTimer endDate={endDate} />
+
+// daysInHours: 53 hours
+<CountdownTimer endDate={endDate} daysInHours={true} />
+```
+
+### Additional: onMount Callback
+
+Triggered once when the component mounts:
+
+```jsx
+<CountdownTimer 
+  endDate={endDate}
+  onMount={(timeDelta) => {
+    console.log('Timer mounted:', timeDelta);
+    // Initialize analytics, etc.
+  }}
+/>
+```
+
 ### Creating Dates
 
 Since the component uses native JavaScript Date objects, you can create dates in multiple ways:
@@ -356,9 +382,11 @@ const endDate3 = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days from 
 | `onStart` | `function` | ❌ No | `undefined` | **Phase 2** Callback when countdown starts |
 | `onPause` | `function` | ❌ No | `undefined` | **Phase 2** Callback when countdown pauses |
 | `onStop` | `function` | ❌ No | `undefined` | **Phase 2** Callback when countdown stops |
+| `onMount` | `function` | ❌ No | `undefined` | **Additional** Callback when component mounts |
 | `autoStart` | `boolean` | ❌ No | `true` | **Phase 2** Whether countdown starts automatically |
 | `zeroPadTime` | `number` | ❌ No | `2` | **Phase 2** Number of digits for zero-padding (1-3) |
 | `overtime` | `boolean` | ❌ No | `false` | **Phase 2** Continue into negative after reaching zero |
+| `daysInHours` | `boolean` | ❌ No | `false` | **Additional** Show time in hours instead of days |
 | `timerClassName` | `string` | ❌ No | `''` | Custom CSS class for the timer container |
 | `sectionClassName` | `string` | ❌ No | `''` | Custom CSS class for each time unit section |
 | `timeClassName` | `string` | ❌ No | `''` | Custom CSS class for the time numbers |
