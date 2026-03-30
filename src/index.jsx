@@ -288,9 +288,7 @@ const CountdownTimer = forwardRef(({
   );
 });
 
-// Prop validation in development
-if (process.env.NODE_ENV !== 'production') {
-  CountdownTimer.displayName = 'CountdownTimer';
-}
+// Set display name for better debugging
+CountdownTimer.displayName = 'CountdownTimer';
 
 export default CountdownTimer;
