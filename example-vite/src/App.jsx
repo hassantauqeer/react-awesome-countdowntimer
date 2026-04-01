@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="app">
       <header>
-        <h1>React Awesome Countdown Timer</h1>
+        <h1>React <span className="neon-text">Awesome</span> Countdown Timer</h1>
         <p>A customizable countdown timer component for React</p>
       </header>
 
@@ -278,13 +278,6 @@ function App() {
           <p>Control number formatting with zeroPadTime prop</p>
           <div className="timer-container">
             <div style={{ marginBottom: '20px' }}>
-              <strong>zeroPadTime=1 (no padding):</strong>
-              <CountdownTimer 
-                endDate={selectedDate}
-                zeroPadTime={1}
-              />
-            </div>
-            <div style={{ marginBottom: '20px' }}>
               <strong>zeroPadTime=3 (3 digits):</strong>
               <CountdownTimer 
                 endDate={selectedDate}
@@ -321,10 +314,6 @@ function App() {
           <h2>🕐 Additional: Days in Hours</h2>
           <p>Show all time in hours instead of separating days</p>
           <div className="timer-container">
-            <div style={{ marginBottom: '20px' }}>
-              <strong>Normal (with days):</strong>
-              <CountdownTimer endDate={selectedDate} />
-            </div>
             <div>
               <strong>daysInHours=true (48h instead of 2d):</strong>
               <CountdownTimer endDate={selectedDate} daysInHours={true} />
