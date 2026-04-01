@@ -10,25 +10,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: black;
-  border-radius: 7px;
+  justify-content: space-between;
 }
 
 .react-countdown-time {
+  width: 100%;
   color: white;
   font-size: 74px;
-  line-height: normal;
-  padding: 5px 10px;
+  background-color: black;
 }
 
 .react-countdown-label {
-  font-size: 22px;
-  display: flex;
-  justify-content: center;
-  background-color: white;
   width: 100%;
   color: #000;
+  font-size: 22px;
   font-weight: 100;
-  height: 100%;
-  align-items: center;
+  background-color: white;
 }
