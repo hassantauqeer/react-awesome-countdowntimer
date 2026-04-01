@@ -61,12 +61,13 @@ function App() {
                 borderRadius: '15px'
               }}
               sectionStyle={{ 
-                backgroundColor: '#3b82f6', 
+                backgroundColor: '#3b82f6',
                 borderRadius: '12px',
                 minWidth: '120px',
                 minHeight: '120px'
               }}
               timeStyle={{ 
+                backgroundColor: '#3b82f6',
                 color: '#ffffff', 
                 fontSize: '60px',
                 fontWeight: 'bold'
@@ -75,7 +76,8 @@ function App() {
                 color: '#1e40af', 
                 fontSize: '16px',
                 fontWeight: '600',
-                textTransform: 'uppercase'
+                textTransform: 'uppercase',
+                width: '100%',
               }}
             />
           </div>
@@ -101,31 +103,10 @@ function App() {
           <div className="timer-container">
             <CountdownTimer 
               endDate={selectedDate}
-              timerStyle={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                padding: '40px',
-                borderRadius: '20px'
-              }}
-              sectionStyle={{
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                backdropFilter: 'blur(10px)',
-                borderRadius: '15px',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
-                minWidth: '110px',
-                minHeight: '110px'
-              }}
-              timeStyle={{
-                color: '#ffffff',
-                fontSize: '56px',
-                fontWeight: '700',
-                textShadow: '2px 2px 4px rgba(0,0,0,0.2)'
-              }}
-              labelStyle={{
-                color: '#764ba2',
-                fontSize: '14px',
-                fontWeight: '500',
-                letterSpacing: '1px'
-              }}
+              timerClassName="gradient-timer"
+              sectionClassName="gradient-section"
+              timeClassName="gradient-time"
+              labelClassName="gradient-label"
             />
           </div>
         </section>
