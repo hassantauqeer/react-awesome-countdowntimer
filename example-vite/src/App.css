@@ -2,7 +2,26 @@
   min-height: 100vh;
   background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
 }
+h1 {
+  font-size: 3rem;
+  margin: 0 0 10px;
+  color: white;
+}
 
+.neon-text {
+    color: #e5a8a8e6;
+    text-shadow: 0 0 5px #ff005e, 0 0 10px #ff005e, 0 0 20px #ff005e, 0 0 40px #ff005e, 0 0 80px #ff005e;
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 5px #ff005e, 0 0 10px #ff005e, 0 0 20px #ff005e, 0 0 40px #ff005e, 0 0 80px #ff005e;
+    }
+    100% {
+        text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff, 0 0 40px #00d4ff, 0 0 80px #00d4ff, 0 0 160px #00d4ff;
+    }
+}
 header {
   text-align: center;
   padding: 60px 20px 40px;
@@ -125,12 +144,12 @@ footer a:hover {
 }
 
 .custom-section {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 14px;
   min-width: 115px;
   min-height: 115px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+background: white;
   transition: transform 0.3s ease;
+  border-radius: 14px;
 }
 
 .custom-section:hover {
@@ -138,20 +157,53 @@ footer a:hover {
 }
 
 .custom-time {
+  background: white;
+  border-radius: 14px;
   color: #f5576c;
   font-size: 58px;
   font-weight: 800;
+  line-height: normal;
 }
 
 .custom-label {
   color: #f093fb;
   font-size: 15px;
+  background: white;
   font-weight: 600;
   text-transform: uppercase;
-  background: transparent;
   letter-spacing: 1.5px;
+  border-radius: 14px;
+  padding-bottom: 10px;
 }
 
+/* Gradient Timer Example */
+.gradient-timer {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40px;
+  border-radius: 20px;
+}
+.gradient-section {
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  min-width: 110px;
+  min-height: 110px;
+}
+.gradient-time {
+  color: #ffffff;
+  font-size: 56px;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  background: transparent;
+}
+.gradient-label {
+  color: #764ba2;
+  font-size: 14px;
+  font-weight: 500;
+  background: white;
+  letter-spacing: 1px;
+}
 /* Responsive Timer Example */
 .responsive-timer {
   background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
@@ -179,6 +231,7 @@ footer a:hover {
   color: #11998e;
   font-size: 64px;
   font-weight: 700;
+  background: transparent;
 }
 
 .responsive-label {
@@ -302,6 +355,7 @@ footer a:hover {
   color: #fa709a;
   font-size: 68px;
   font-weight: 800;
+  background: transparent;
 }
 
 .fully-responsive-label {

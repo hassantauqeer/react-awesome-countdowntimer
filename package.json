@@ -1,7 +1,7 @@
 {
   "name": "react-awesome-countdowntimer",
-  "version": "2.1.0",
-  "description": "An awesome countdown timer for reactJS, easy to handle use & edit.",
+  "version": "3.0.0",
+  "description": "An awesome countdown timer for React with custom renderer, callbacks, and zero dependencies.",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

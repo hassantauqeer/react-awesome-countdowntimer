@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "react": "^19.2.4",
-    "react-awesome-countdowntimer": "file:..",
+    "react-awesome-countdowntimer": "link:../../../../Library/pnpm/global/5/node_modules/react-awesome-countdowntimer",
     "react-calendar": "^6.0.0",
     "react-clock": "^6.0.0",
     "react-datetime-picker": "^7.0.1",
