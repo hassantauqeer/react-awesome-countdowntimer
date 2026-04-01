@@ -1,6 +1,6 @@
 # React Awesome Countdown Timer
 
-A modern, customizable countdown timer component for React applications. Built with React hooks and styled with CSS classes for easy customization.
+A modern, customizable countdown timer component for React with custom renderer, callbacks, and zero dependencies.
 
 [![npm version](https://img.shields.io/npm/v/react-awesome-countdowntimer.svg)](https://www.npmjs.com/package/react-awesome-countdowntimer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -9,34 +9,25 @@ A modern, customizable countdown timer component for React applications. Built w
 
 ![Demo Image](https://github.com/hassantauqeer/react-awesome-countdowntimer/blob/dev/demo.gif)
 
-
 ## ✨ Features
 
-- 🎯 **Modern React** - Built with functional components and hooks
-- 🎨 **Fully Customizable** - Style with CSS classes or inline styles
-- 🎭 **Custom Renderer** - Complete control over rendering with render props (v3)
-- � **Lifecycle Callbacks** - onComplete, onTick callbacks for actions (v3)
-- 👶 **Completion Children** - Simple completion state with children prop (v3)
-- � **Zero Dependencies** - No external dependencies required
-- ⚡ **Lightweight** - Only ~1.5KB gzipped
-- 🚀 **Fast** - Optimized with useMemo for performance
-- 🔧 **TypeScript Ready** - Includes type definitions
-- 🌐 **ESM Support** - Modern module format
+- 🎯 Modern React with hooks
+- 🎨 Fully customizable (CSS classes + inline styles)
+- 🎭 Custom renderer with render props
+- 🔔 Lifecycle callbacks (onComplete, onTick, onStart, onPause, onStop, onMount)
+- 🎮 Imperative API (start, pause, stop)
+- 👶 Completion children
+- 📦 Zero dependencies
+- ⚡ Lightweight (~1.6KB gzipped)
+- 🔧 TypeScript ready
 
 ## 📦 Installation
 
-**Using npm:**
 ```bash
 npm install react-awesome-countdowntimer
-```
-
-**Using pnpm:**
-```bash
+# or
 pnpm add react-awesome-countdowntimer
-```
-
-**Using yarn:**
-```bash
+# or
 yarn add react-awesome-countdowntimer
 ```
 
@@ -48,498 +39,155 @@ import 'react-awesome-countdowntimer/dist/index.css';
 
 function App() {
   const endDate = new Date('2026-12-31T23:59:59');
-  
   return <CountdownTimer endDate={endDate} />;
 }
 ```
 
-## 📖 Usage Examples
+## 📖 Examples
 
-### Basic Usage (Default Styling)
-
-```jsx
-import CountdownTimer from 'react-awesome-countdowntimer';
-import 'react-awesome-countdowntimer/dist/index.css';
-
-function App() {
-  const endDate = new Date('2026-12-31T23:59:59');
-  
-  return (
-    <div>
-      <h1>New Year Countdown</h1>
-      <CountdownTimer endDate={endDate} />
-    </div>
-  );
-}
-```
-
-### With Custom Inline Styles
+### Custom Styling
 
 ```jsx
-import CountdownTimer from 'react-awesome-countdowntimer';
-import 'react-awesome-countdowntimer/dist/index.css';
-
-function App() {
-  const endDate = new Date('2026-12-31T23:59:59');
-  
-  return (
-    <CountdownTimer 
-      endDate={endDate}
-      timerStyle={{ 
-        backgroundColor: '#f0f4f8', 
-        padding: '30px',
-        borderRadius: '15px'
-      }}
-      sectionStyle={{ 
-        backgroundColor: '#3b82f6', 
-        borderRadius: '12px',
-        minWidth: '120px',
-        minHeight: '120px'
-      }}
-      timeStyle={{ 
-        color: '#ffffff', 
-        fontSize: '60px',
-        fontWeight: 'bold'
-      }}
-      labelStyle={{ 
-        color: '#1e40af', 
-        fontSize: '16px',
-        fontWeight: '600'
-      }}
-    />
-  );
-}
-```
-
-### With Custom CSS Classes
-
-```jsx
-import CountdownTimer from 'react-awesome-countdowntimer';
-import 'react-awesome-countdowntimer/dist/index.css';
-import './custom-timer.css';
-
-function App() {
-  const endDate = new Date('2026-12-31T23:59:59');
-  
-  return (
-    <CountdownTimer 
-      endDate={endDate}
-      timerClassName="my-custom-timer"
-      sectionClassName="my-custom-section"
-      timeClassName="my-custom-time"
-      labelClassName="my-custom-label"
-    />
-  );
-}
-```
-
-**custom-timer.css:**
-```css
-.my-custom-timer {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 40px;
-  border-radius: 20px;
-}
-
-.my-custom-section {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.my-custom-time {
-  color: #ffffff;
-  font-size: 56px;
-  font-weight: 700;
-}
-
-.my-custom-label {
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 1px;
-}
-```
-
-### With Dynamic Date Selection
-
-```jsx
-import { useState } from 'react';
-import DateTimePicker from 'react-datetime-picker';
-import CountdownTimer from 'react-awesome-countdowntimer';
-import 'react-awesome-countdowntimer/dist/index.css';
-
-function App() {
-  const [selectedDate, setSelectedDate] = useState(new Date('2026-12-31T23:59:59'));
-  
-  return (
-    <div>
-      <h2>Pick Your Target Date</h2>
-      <DateTimePicker
-        onChange={setSelectedDate}
-        value={selectedDate}
-      />
-      
-      <h2>Countdown</h2>
-      <CountdownTimer endDate={selectedDate} />
-    </div>
-  );
-}
-```
-
-### V3: Custom Renderer
-
-Take complete control over rendering with a custom renderer function:
-
-```jsx
-import CountdownTimer from 'react-awesome-countdowntimer';
-
-function App() {
-  const endDate = new Date('2026-12-31T23:59:59');
-  
-  return (
-    <CountdownTimer 
-      endDate={endDate}
-      renderer={({ days, hours, minutes, seconds, completed }) => {
-        if (completed) {
-          return <div>🎉 Time's up!</div>;
-        }
-        return (
-          <div>
-            {days > 0 && <span>{days}d </span>}
-            <span>{hours}:{minutes}:{seconds}</span>
-          </div>
-        );
-      }}
-    />
-  );
-}
-```
-
-### V3: With Callbacks
-
-Trigger actions when countdown completes or on every tick:
-
-```jsx
-import CountdownTimer from 'react-awesome-countdowntimer';
-import 'react-awesome-countdowntimer/dist/index.css';
-
-function App() {
-  const endDate = new Date('2026-12-31T23:59:59');
-  
-  return (
-    <CountdownTimer 
-      endDate={endDate}
-      onComplete={(timeDelta) => {
-        console.log('Countdown finished!', timeDelta);
-        // Play sound, show notification, etc.
-      }}
-      onTick={(timeDelta) => {
-        console.log('Tick:', timeDelta.seconds);
-        // Update progress bar, etc.
-      }}
-    />
-  );
-}
-```
-
-### V3: Completion Children
-
-Simple way to show content when countdown completes:
-
-```jsx
-import CountdownTimer from 'react-awesome-countdowntimer';
-import 'react-awesome-countdowntimer/dist/index.css';
-
-function App() {
-  const endDate = new Date('2026-12-31T23:59:59');
-  
-  return (
-    <CountdownTimer endDate={endDate}>
-      <div>✨ Countdown Complete! ✨</div>
-    </CountdownTimer>
-  );
-}
-```
-
-### Phase 2: Imperative API
-
-Control the countdown programmatically with start, pause, and stop methods:
-
-```jsx
-import { useRef } from 'react';
-import CountdownTimer from 'react-awesome-countdowntimer';
-import 'react-awesome-countdowntimer/dist/index.css';
-
-function App() {
-  const timerRef = useRef();
-  const endDate = new Date('2026-12-31T23:59:59');
-  
-  return (
-    <>
-      <CountdownTimer 
-        ref={timerRef}
-        endDate={endDate}
-        autoStart={false}
-        onStart={() => console.log('Started!')}
-        onPause={() => console.log('Paused!')}
-        onStop={() => console.log('Stopped!')}
-      />
-      
-      <button onClick={() => timerRef.current.start()}>Start</button>
-      <button onClick={() => timerRef.current.pause()}>Pause</button>
-      <button onClick={() => timerRef.current.stop()}>Stop</button>
-    </>
-  );
-}
-```
-
-### Phase 2: Zero Padding Control
-
-Control how numbers are formatted:
-
-```jsx
-// No padding: 1:2:3
-<CountdownTimer endDate={endDate} zeroPadTime={1} />
-
-// Default padding: 01:02:03
-<CountdownTimer endDate={endDate} zeroPadTime={2} />
-
-// Extra padding: 001:002:003
-<CountdownTimer endDate={endDate} zeroPadTime={3} />
-```
-
-### Phase 2: Overtime Mode
-
-Continue counting into negative after reaching zero:
-
-```jsx
+// With CSS classes
 <CountdownTimer 
   endDate={endDate}
-  overtime={true}
-  renderer={({ hours, minutes, seconds, completed }) => (
-    <div>
-      {completed && <span>OVERTIME: </span>}
-      {hours}:{minutes}:{seconds}
-    </div>
-  )}
+  timerClassName="my-timer"
+  sectionClassName="my-section"
+/>
+
+// With inline styles
+<CountdownTimer 
+  endDate={endDate}
+  timerStyle={{ background: '#f0f4f8', padding: '30px' }}
+  sectionStyle={{ background: '#3b82f6', borderRadius: '12px' }}
 />
 ```
 
-### Additional: Days in Hours
-
-Show time in hours instead of separating into days:
-
-```jsx
-// Normal: 2 days, 5 hours
-<CountdownTimer endDate={endDate} />
-
-// daysInHours: 53 hours
-<CountdownTimer endDate={endDate} daysInHours={true} />
-```
-
-### Additional: onMount Callback
-
-Triggered once when the component mounts:
+### Custom Renderer
 
 ```jsx
 <CountdownTimer 
   endDate={endDate}
-  onMount={(timeDelta) => {
-    console.log('Timer mounted:', timeDelta);
-    // Initialize analytics, etc.
+  renderer={({ days, hours, minutes, seconds, completed }) => {
+    if (completed) return <div>🎉 Time's up!</div>;
+    return <div>{days}d {hours}:{minutes}:{seconds}</div>;
   }}
 />
 ```
 
-### Creating Dates
-
-Since the component uses native JavaScript Date objects, you can create dates in multiple ways:
+### Callbacks
 
 ```jsx
-// Using Date constructor with string
-const endDate1 = new Date('2026-12-31T23:59:59');
+<CountdownTimer 
+  endDate={endDate}
+  onComplete={() => console.log('Done!')}
+  onTick={(delta) => console.log(delta.seconds)}
+/>
+```
 
-// Using Date constructor with parameters (year, month, day, hour, minute, second)
-const endDate2 = new Date(2026, 11, 31, 23, 59, 59); // Note: month is 0-indexed
+### Completion Children
 
-// Adding time to current date
-const endDate3 = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days from now
+```jsx
+<CountdownTimer endDate={endDate}>
+  <div>✨ Complete! ✨</div>
+</CountdownTimer>
+```
 
-// Using any of these
-<CountdownTimer endDate={endDate1} />
+### Imperative Control
+
+```jsx
+const timerRef = useRef();
+
+<CountdownTimer ref={timerRef} endDate={endDate} autoStart={false} />
+<button onClick={() => timerRef.current.start()}>Start</button>
+<button onClick={() => timerRef.current.pause()}>Pause</button>
+```
+
+### Advanced Features
+
+```jsx
+// Overtime mode (continue past zero)
+<CountdownTimer endDate={endDate} overtime={true} />
+
+// Days in hours (show 48h instead of 2d)
+<CountdownTimer endDate={endDate} daysInHours={true} />
+
+// Custom padding
+<CountdownTimer endDate={endDate} zeroPadTime={3} /> // 001:002:003
 ```
 
 ## 🎛️ API Reference
 
 ### Props
 
-| Prop | Type | Required | Default | Description |
-|------|------|----------|---------|-------------|
-| `endDate` | `Date` | ✅ Yes | - | The target date/time for the countdown |
-| `renderer` | `function` | ❌ No | `undefined` | **V3** Custom render function for complete control over output |
-| `children` | `ReactNode` | ❌ No | `undefined` | **V3** Content to show when countdown completes |
-| `onComplete` | `function` | ❌ No | `undefined` | **V3** Callback when countdown finishes |
-| `onTick` | `function` | ❌ No | `undefined` | **V3** Callback on every second (tick) |
-| `onStart` | `function` | ❌ No | `undefined` | **Phase 2** Callback when countdown starts |
-| `onPause` | `function` | ❌ No | `undefined` | **Phase 2** Callback when countdown pauses |
-| `onStop` | `function` | ❌ No | `undefined` | **Phase 2** Callback when countdown stops |
-| `onMount` | `function` | ❌ No | `undefined` | **Additional** Callback when component mounts |
-| `autoStart` | `boolean` | ❌ No | `true` | **Phase 2** Whether countdown starts automatically |
-| `zeroPadTime` | `number` | ❌ No | `2` | **Phase 2** Number of digits for zero-padding (1-3) |
-| `overtime` | `boolean` | ❌ No | `false` | **Phase 2** Continue into negative after reaching zero |
-| `daysInHours` | `boolean` | ❌ No | `false` | **Additional** Show time in hours instead of days |
-| `timerClassName` | `string` | ❌ No | `''` | Custom CSS class for the timer container |
-| `sectionClassName` | `string` | ❌ No | `''` | Custom CSS class for each time unit section |
-| `timeClassName` | `string` | ❌ No | `''` | Custom CSS class for the time numbers |
-| `labelClassName` | `string` | ❌ No | `''` | Custom CSS class for the labels (Months, Days, etc.) |
-| `timerStyle` | `object` | ❌ No | `undefined` | Inline styles for the timer container |
-| `sectionStyle` | `object` | ❌ No | `undefined` | Inline styles for each time unit section |
-| `timeStyle` | `object` | ❌ No | `undefined` | Inline styles for the time numbers |
-| `labelStyle` | `object` | ❌ No | `undefined` | Inline styles for the labels |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `endDate` | `Date` | **required** | Target date/time |
+| `renderer` | `function` | - | Custom render function |
+| `children` | `ReactNode` | - | Content shown when complete |
+| `onComplete` | `function` | - | Callback when finished |
+| `onTick` | `function` | - | Callback every second |
+| `onStart` | `function` | - | Callback when started |
+| `onPause` | `function` | - | Callback when paused |
+| `onStop` | `function` | - | Callback when stopped |
+| `onMount` | `function` | - | Callback on mount |
+| `autoStart` | `boolean` | `true` | Auto-start countdown |
+| `zeroPadTime` | `number` | `2` | Zero-padding digits (1-3) |
+| `overtime` | `boolean` | `false` | Continue past zero |
+| `daysInHours` | `boolean` | `false` | Show hours instead of days |
+| `timerClassName` | `string` | `''` | Timer container class |
+| `sectionClassName` | `string` | `''` | Section class |
+| `timeClassName` | `string` | `''` | Time number class |
+| `labelClassName` | `string` | `''` | Label class |
+| `timerStyle` | `object` | - | Timer container styles |
+| `sectionStyle` | `object` | - | Section styles |
+| `timeStyle` | `object` | - | Time number styles |
+| `labelStyle` | `object` | - | Label styles |
 
-### V3 Render Props (for custom renderer)
+### Render Props
 
-When using the `renderer` prop, your function receives an object with:
-
-| Property | Type | Description |
-|----------|------|-------------|
-| `total` | `number` | Total milliseconds remaining |
-| `days` | `number` | Days remaining (as number) |
-| `hours` | `number` | Hours remaining (as number) |
-| `minutes` | `number` | Minutes remaining (as number) |
-| `seconds` | `number` | Seconds remaining (as number) |
-| `completed` | `boolean` | Whether countdown has finished |
-| `formatted` | `object` | Zero-padded string values (`{ days, hours, minutes, seconds }`) |
-
-### V3 Callback Parameters
-
-Both `onComplete` and `onTick` receive a `timeDelta` object:
+The `renderer` function receives:
 
 ```typescript
 {
-  total: number;      // Total milliseconds remaining
+  total: number;      // Milliseconds remaining
   days: number;       // Days remaining
   hours: number;      // Hours remaining
   minutes: number;    // Minutes remaining
   seconds: number;    // Seconds remaining
-  completed: boolean; // Whether countdown is complete
+  completed: boolean; // Is complete
+  formatted: {        // Zero-padded strings
+    days: string;
+    hours: string;
+    minutes: string;
+    seconds: string;
+  }
 }
 ```
 
-### Phase 2 Imperative API Methods
+### Imperative API
 
-When using a ref, you can access these methods:
-
-| Method | Returns | Description |
-|--------|---------|-------------|
-| `start()` | `void` | Starts the countdown |
-| `pause()` | `void` | Pauses the countdown |
-| `stop()` | `void` | Stops and resets the countdown |
-| `isPaused()` | `boolean` | Returns true if countdown is paused |
-| `isStopped()` | `boolean` | Returns true if countdown is stopped |
-| `isCompleted()` | `boolean` | Returns true if countdown has finished |
-
-**Example:**
 ```jsx
-const timerRef = useRef();
-
-// Later in your code:
-timerRef.current.start();
-timerRef.current.pause();
-const paused = timerRef.current.isPaused();
+const ref = useRef();
+ref.current.start();      // Start countdown
+ref.current.pause();      // Pause countdown
+ref.current.stop();       // Stop countdown
+ref.current.isPaused();   // Returns boolean
+ref.current.isStopped();  // Returns boolean
+ref.current.isCompleted(); // Returns boolean
 ```
 
 ### Default CSS Classes
 
-The component uses these CSS classes by default (can be overridden):
-
 - `.react-countdown-timer` - Main container
-- `.react-countdown-section` - Each time unit box (months, days, hours, etc.)
-- `.react-countdown-time` - The number display
-- `.react-countdown-label` - The label text ("Months", "Days", etc.)
-
-### Time Units Displayed
-
-The timer automatically displays only non-zero time units:
-- **Months** - Shown if > 0
-- **Days** - Shown if > 0
-- **Hours** - Shown if > 0
-- **Minutes** - Shown if > 0
-- **Seconds** - Shown if > 0
-
-## 🎨 Styling Guide
-
-### Default Styles
-
-The component comes with default styles that provide a clean, modern look:
-- Black background sections with rounded corners
-- White text for numbers (74px)
-- White background labels with black text (22px)
-
-### Customization Options
-
-1. **CSS Classes** (Recommended) - Override default classes in your CSS
-2. **Inline Styles** - Pass style objects via props
-3. **Mix Both** - Combine CSS classes with inline style overrides
-
-### CSS Class Hierarchy
-
-```
-.react-countdown-timer (or your timerClassName)
-  └── .react-countdown-section (or your sectionClassName)
-        ├── .react-countdown-time (or your timeClassName)
-        └── .react-countdown-label (or your labelClassName)
-```
-
-## 🛠️ Development
-
-This package uses **Vite** for building and **pnpm** for package management.
-
-### Setup
-
-```bash
-git clone https://github.com/hassantauqeer/react-awesome-countdowntimer.git
-cd react-awesome-countdowntimer
-pnpm install
-```
-
-### Build
-
-```bash
-pnpm run build
-```
-
-### Watch Mode (for development)
-
-```bash
-pnpm run build:watch
-```
-
-### Run Example App
-
-```bash
-cd example-vite
-pnpm install
-pnpm run dev
-```
-
-Then open [http://localhost:5173](http://localhost:5173) to see the examples.
-
-## 📋 Requirements
-
-- React 16.8+ (hooks support)
-- No other dependencies required!
+- `.react-countdown-section` - Time unit box
+- `.react-countdown-time` - Number display
+- `.react-countdown-label` - Label text
 
 ## 📄 License
 
 MIT © [Hassan Tauqeer](https://github.com/hassantauqeer)
 
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome!
-
-## ⭐ Show Your Support
+## ⭐ Support
 
 Give a ⭐️ if this project helped you!
