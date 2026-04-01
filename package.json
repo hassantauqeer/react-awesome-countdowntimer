@@ -42,11 +42,11 @@
   "npmName": "react-awesome-countdowntimer",
   "keywords": [
     "react-countdown",
+    "react-countdown-timer",
     "countdown",
     "countdown-timer",
     "react",
     "react-timer",
-    "slider",
     "react-component"
   ],
   "repository": {
